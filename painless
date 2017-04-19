@@ -27,22 +27,24 @@ if (empty($path)) {
 
 if (is_dir($path)) {
     echo messageBuilder('The selected directory already exists!', 1, 1);
-}else{
+} else {
     mkdir($path);
     
     if (!class_exists('ZipArchive')) {
-        throw new RuntimeException('The Zip PHP extension is not installed. Please install it and try again.');
+        echo messageBuilder('The Zip PHP extension is not installed. Please install it and try again.', 1, 1);
     }
     
     $zipFile = makeFilename();
     
     $guzzleClient = new Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false,],]);
     
-    $response = $guzzleClient->get('https://github.com/junioraluisio/painless/archive/master.zip');
+    $urlGitHub = 'https://github.com/junioraluisio/painless/archive/master.zip';
+    
+    $response = $guzzleClient->get($urlGitHub);
     
     file_put_contents($zipFile, $response->getBody());
     
-    extractZip($zipFile, __DIR__,$path);
+    extractZip($zipFile, __DIR__, $path);
     
     cleanUp($zipFile);
     

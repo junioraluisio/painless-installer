@@ -16,7 +16,6 @@ class ComposerStaticInit4883d3752288b5709484b2da4a5b05d8
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
-            'Painless\\Installer\\' => 19,
         ),
         'G' => 
         array (
@@ -30,10 +29,6 @@ class ComposerStaticInit4883d3752288b5709484b2da4a5b05d8
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Painless\\Installer\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/core/Entities',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

@@ -10,13 +10,6 @@
       "email": "softpuzzle@gmail.com"
     }
   ],
-  "autoload": {
-    "psr-4": {
-      "Painless\\Installer\\": [
-        "core/Entities/"
-      ]
-    }
-  },
   "require": {
     "guzzlehttp/guzzle": "^6.2"
   },
