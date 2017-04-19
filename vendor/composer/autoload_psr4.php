@@ -7,9 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
-    'Painless\\Factory\\' => array($baseDir . '/core/Entities', $baseDir . '/core/Traits'),
+    'Painless\\Installer\\' => array($baseDir . '/core/Entities'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
-    'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
 );

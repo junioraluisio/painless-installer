@@ -16,17 +16,13 @@ class ComposerStaticInit4883d3752288b5709484b2da4a5b05d8
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
-            'Painless\\Factory\\' => 17,
+            'Painless\\Installer\\' => 19,
         ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
-        ),
-        'D' => 
-        array (
-            'Dotenv\\' => 7,
         ),
     );
 
@@ -35,10 +31,9 @@ class ComposerStaticInit4883d3752288b5709484b2da4a5b05d8
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Painless\\Factory\\' => 
+        'Painless\\Installer\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core/Entities',
-            1 => __DIR__ . '/../..' . '/core/Traits',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -51,10 +46,6 @@ class ComposerStaticInit4883d3752288b5709484b2da4a5b05d8
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
-        ),
-        'Dotenv\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
     );
 

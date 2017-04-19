@@ -1,6 +1,6 @@
 {
   "name": "painless/installer",
-  "description": "Gerador de classes",
+  "description": "Painless Installer",
   "minimum-stability": "stable",
   "license": "MIT",
   "homepage": "https://github.com/junioraluisio/factory/blob/master/composer.json",
@@ -12,14 +12,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Painless\\Factory\\": [
-        "core/Entities/",
-        "core/Traits/"
+      "Painless\\Installer\\": [
+        "core/Entities/"
       ]
     }
   },
   "require": {
-    "vlucas/phpdotenv": "^2.4",
     "guzzlehttp/guzzle": "^6.2"
   },
   "bin": [

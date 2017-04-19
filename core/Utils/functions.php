@@ -7,110 +7,12 @@
  */
 
 /**
- * Altera o padrão do caminho do diretório
- *
- * @param string $dir
- * @param string $path
- *
- * @return mixed
- */
-function path($dir, $path)
-{
-    $pathFinal = $dir . '_' . $path;
-    
-    return str_replace('_', DIRECTORY_SEPARATOR, $pathFinal);
-}
-
-/**
- * @return string
- */
-function relativePath()
-{
-    $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
-    $host   = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
-    $uri    = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : 'SCRIPT_NAME';
-    
-    $arrUri = explode('/', $uri);
-    
-    array_pop($arrUri);
-    
-    $url = implode('/', $arrUri);
-    
-    return $scheme . '://' . $host . $url;
-}
-
-/**
- * @param        $string
- * @param string $slug
- *
- * @return mixed|string
- */
-function flag($string, $slug = '_')
-{
-    $string = strtolower(utf8_decode($string));
-    
-    // Código ASCII das vogais
-    $ascii['a'] = range(224, 230);
-    $ascii['A'] = range(192, 197);
-    $ascii['e'] = range(232, 235);
-    $ascii['E'] = range(200, 203);
-    $ascii['i'] = range(236, 239);
-    $ascii['I'] = range(204, 207);
-    $ascii['o'] = array_merge(range(242, 246), [
-        240,
-        248
-    ]);
-    $ascii['O'] = range(210, 214);
-    $ascii['u'] = range(249, 252);
-    $ascii['U'] = range(217, 220);
-    
-    // Código ASCII dos outros caracteres
-    $ascii['b'] = [223];
-    $ascii['c'] = [231];
-    $ascii['C'] = [199];
-    $ascii['d'] = [208];
-    $ascii['n'] = [241];
-    $ascii['y'] = [
-        253,
-        255
-    ];
-    
-    foreach ($ascii as $key => $item) {
-        $acentos = '';
-        foreach ($item AS $codigo) {
-            $acentos .= chr($codigo);
-        }
-        $troca[$key] = '/[' . $acentos . ']/i';
-    }
-    
-    $string = preg_replace(array_values($troca), array_keys($troca), $string);
-    
-    // Troca tudo que não for letra ou número por um caractere ($slug)
-    $string = preg_replace('/[^a-z0-9]/i', $slug, $string);
-    // Tira os caracteres ($slug) repetidos
-    $string = preg_replace('/' . $slug . '{2,}/i', $slug, $string);
-    $string = trim($string, $slug);
-    $string = strtolower($string);
-    
-    return $string;
-}
-
-/**
- * @param string $text
+ * @param $msg
+ * @param $eolF
+ * @param $eolL
  *
  * @return string
  */
-function token(string $text)
-{
-    $salt = '?#ATEw_u6p@draHEyakeD32$eStAG7=$';
-    
-    $text = preg_replace('/[^0-9]/', '', $text);
-    
-    $txt = md5($text) . '.' . md5($salt);
-    
-    return sha1($txt);
-}
-
 function messageBuilder($msg, $eolF, $eolL)
 {
     $txt = '';
@@ -127,11 +29,20 @@ function messageBuilder($msg, $eolF, $eolL)
     return $txt;
 }
 
+/**
+ * @return string
+ */
 function messageBuilderHelp()
 {
     return messageBuilder('For help type: builder -h ou builder --help', 0, 2);
 }
 
+/**
+ * @param $timeStart
+ * @param $timeEnd
+ *
+ * @return string
+ */
 function messageBuilderTime($timeStart, $timeEnd)
 {
     $elapsedTime = number_format($timeEnd - $timeStart, 2, ',', '');
@@ -186,6 +97,10 @@ function copyDirectory($dirFont, $dirDestiny)
     }
 }
 
+/**
+ * @param $dir
+ * @param $path
+ */
 function copyArchives($dir, $path)
 {
     $directory = scandir($dir);
@@ -212,30 +127,6 @@ function copyArchives($dir, $path)
 }
 
 /**
- * Download the temporary Zip to the given file.
- *
- * @param  string $zipFile
- * @param  string $version
- *
- * @return $this
- */
-function download($zipFile, $version = 'master')
-{
-    switch ($version) {
-        case 'develop':
-            $filename = 'latest-develop.zip';
-            break;
-        case 'master':
-            $filename = 'latest.zip';
-            break;
-    }
-    $response = (new Client)->get('https://github.com/junioraluisio/painless/archive/master.zip');
-    file_put_contents($zipFile, $response->getBody());
-    
-    return $this;
-}
-
-/**
  * Generate a random temporary filename.
  *
  * @return string
@@ -246,12 +137,9 @@ function makeFilename()
 }
 
 /**
- * Extract the Zip file into the given directory.
- *
- * @param  string $zipFile
- * @param  string $directory
- *
- * @return $this
+ * @param $zipFile
+ * @param $directory
+ * @param $destiny
  */
 function extractZip($zipFile, $directory, $destiny)
 {
@@ -271,11 +159,7 @@ function extractZip($zipFile, $directory, $destiny)
 }
 
 /**
- * Clean-up the Zip file.
- *
- * @param  string $zipFile
- *
- * @return $this
+ * @param $zipFile
  */
 function cleanUp($zipFile)
 {
@@ -283,9 +167,15 @@ function cleanUp($zipFile)
     @unlink($zipFile);
 }
 
+/**
+ * @param $dir
+ *
+ * @return bool
+ */
 function delTree($dir)
 {
     $files = array_diff(scandir($dir), ['.', '..']);
+    
     foreach ($files as $file) {
         (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
     }

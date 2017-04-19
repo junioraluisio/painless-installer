@@ -13,12 +13,7 @@ use GuzzleHttp\Client;
 
 define('DS', DIRECTORY_SEPARATOR);
 
-$pathFunctions = str_replace('_', DS, 'core_Utils_functions.php');
-
-include $pathFunctions;
-
-// Iniciamos o "contador"
-$timeStart = microtimeFloat();
+include 'core/Utils/functions.php';
 
 // Iniciamos o "contador"
 $timeStart = microtimeFloat();
@@ -26,27 +21,18 @@ $timeStart = microtimeFloat();
 $path = isset($argv[1]) ? $argv[1] : '';
 
 if (empty($path)) {
-    echo messageBuilder('Defina um diretorio!', 1, 1);
+    echo messageBuilder('Define a directory!', 1, 1);
     exit;
 }
 
 if (is_dir($path)) {
-    echo messageBuilder('O diretorio selecionado ja existe!', 1, 1);
-    exit;
-}
-
-if (!is_dir($path)) {
+    echo messageBuilder('The selected directory already exists!', 1, 1);
+}else{
     mkdir($path);
     
     if (!class_exists('ZipArchive')) {
         throw new RuntimeException('The Zip PHP extension is not installed. Please install it and try again.');
     }
-    
-    //$output = shell_exec('cd ' . $path);
-    //echo "$output";
-    
-    //$output = shell_exec('git clone https://github.com/junioraluisio/painless.git');
-    //echo "$output";
     
     $zipFile = makeFilename();
     
@@ -60,7 +46,7 @@ if (!is_dir($path)) {
     
     cleanUp($zipFile);
     
-    echo messageBuilder('Instalado com sucesso em "' . $path . '"!', 1, 1);
+    echo messageBuilder('Successfully installed in "' . $path . '"!', 1, 1);
 }
 
 // Terminamos o "contador" e exibimos
