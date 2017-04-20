@@ -38,7 +38,7 @@ if (is_dir($path)) {
     
     $guzzleClient = new Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false,],]);
     
-    $urlGitHub = 'https://github.com/junioraluisio/painless/archive/master.zip';
+    $urlGitHub = 'https://github.com/junioraluisio/painless-factory/archive/master.zip';
     
     $response = $guzzleClient->get($urlGitHub);
     
