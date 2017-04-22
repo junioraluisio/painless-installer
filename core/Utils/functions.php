@@ -133,7 +133,7 @@ function copyArchives($dir, $path)
  */
 function makeFilename($dir)
 {
-    return $dir . '/painless_' . md5(time() . uniqid()) . '.zip';
+    return $dir . DS . 'temp' . DS . 'painless_' . md5(time() . uniqid()) . '.zip';
 }
 
 /**
@@ -144,7 +144,7 @@ function makeFilename($dir)
 function extractZip($zipFile, $directory, $destiny)
 {
     $dirTemp   = $directory . DS . 'temp';
-    $dirMaster = $dirTemp . DS . 'painless-master';
+    $dirMaster = $dirTemp . DS . 'painless-factory-master';
     
     $archive = new ZipArchive;
     $archive->open($zipFile);
@@ -153,9 +153,11 @@ function extractZip($zipFile, $directory, $destiny)
     copyDirectory($dirMaster, $destiny);
     copyArchives($dirMaster, $destiny);
     
+    $archive->close();
+    
     delTree($dirTemp);
     
-    $archive->close();
+    
 }
 
 /**
@@ -177,7 +179,8 @@ function delTree($dir)
     $files = array_diff(scandir($dir), ['.', '..']);
     
     foreach ($files as $file) {
-        (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+        $dirFile = $dir . DS . $file;
+        (is_dir($dirFile)) ? delTree($dirFile) : unlink($dirFile);
     }
     
     return rmdir($dir);

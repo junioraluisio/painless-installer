@@ -29,6 +29,7 @@ if (is_dir($path)) {
     echo messageBuilder('The selected directory already exists!', 1, 1);
 } else {
     mkdir($path);
+    mkdir($path . DS . 'temp');
     
     if (!class_exists('ZipArchive')) {
         echo messageBuilder('The Zip PHP extension is not installed. Please install it and try again.', 1, 1);
@@ -44,7 +45,7 @@ if (is_dir($path)) {
     
     file_put_contents($zipFile, $response->getBody());
     
-    extractZip($zipFile, __DIR__, $path);
+    extractZip($zipFile, $path, $path);
     
     cleanUp($zipFile);
     
