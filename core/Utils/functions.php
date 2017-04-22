@@ -131,9 +131,9 @@ function copyArchives($dir, $path)
  *
  * @return string
  */
-function makeFilename()
+function makeFilename($dir)
 {
-    return getcwd() . '/painless_' . md5(time() . uniqid()) . '.zip';
+    return $dir . '/painless_' . md5(time() . uniqid()) . '.zip';
 }
 
 /**

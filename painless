@@ -34,7 +34,7 @@ if (is_dir($path)) {
         echo messageBuilder('The Zip PHP extension is not installed. Please install it and try again.', 1, 1);
     }
     
-    $zipFile = makeFilename();
+    $zipFile = makeFilename($path);
     
     $guzzleClient = new Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false,],]);
     
