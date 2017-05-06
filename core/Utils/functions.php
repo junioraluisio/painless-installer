@@ -144,7 +144,7 @@ function makeFilename($dir)
 function extractZip($zipFile, $directory, $destiny)
 {
     $dirTemp   = $directory . DS . 'temp';
-    $dirMaster = $dirTemp . DS . 'painless-factory-master';
+    $dirMaster = $dirTemp . DS . 'painless-painless-master';
     
     $archive = new ZipArchive;
     $archive->open($zipFile);
