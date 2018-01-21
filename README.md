@@ -23,4 +23,8 @@ Insira o caminho do arquivo binário do Painless no Path do seu sistema operacio
 ##### GNU/ Linux Distributions
 > _$HOME/.composer/vendor/bin_
 
-Após instalado um novo comando chamado "*painless*" será habilitado do seu terminal e este será capaz de criar uma nova instalação do Painless no diretório de sua escolha. Por exemplo, o comando "_painless site_" criará um diretório chamado "*site*" contendo todos os arquivos necessários para o funcionamento do Painless.
+Após instalado um novo comando chamado "*painless*" será habilitado do seu terminal e este será capaz de criar uma nova instalação do Painless no diretório de sua escolha. Por exemplo, o comando:
+
+> "_painless site_"
+
+Cria um diretório chamado "*site*" contendo todos os arquivos necessários para o funcionamento do Painless.
