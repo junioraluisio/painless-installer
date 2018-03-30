@@ -185,3 +185,45 @@ function delTree($dir)
     
     return rmdir($dir);
 }
+
+function createEnvFile($path)
+{
+    $fileEnv = $path . '/.env';
+    
+    if(file_exists($fileEnv)){
+        unlink($fileEnv);
+    }
+    
+    $fp = fopen($fileEnv, "w");
+    
+    $configs = [
+        '# Database',
+        'DB_CONNECTION=mysql',
+        'DB_HOST=127.0.0.1',
+        'DB_PORT=3306',
+        'DB_NAME=',
+        'DB_USER=',
+        'DB_PASS=' . PHP_EOL,
+        '# Session',
+        'SESSION_NAME=nkNluAFsFRjXFmkS' . PHP_EOL,
+        '# Templates folders',
+        'VIEW_PATH=public/views',
+        'VIEW_CACHE=tmp/cache/views' . PHP_EOL,
+        '# Token information',
+        'JWT_ISSUER=http://domainname.com',
+        'JWT_AUDIENCE=http://domainname.com',
+        'JWT_ID=bjZW3jmxyu2co3dx',
+        'JWT_SECRET=oyEgqTZinAIlD3dcuirXQuo86ZeNg5ZpbMQtECxhb9KsDHGvZv' . PHP_EOL,
+        '# Paths Auth',
+        'PATH_PROTECTED=/api|/app',
+        'PATH_PASSTHROUGH=/auth'
+    ];
+    
+    foreach ($configs as $config) {
+        fwrite($fp, $config . PHP_EOL);
+    }
+    
+    fclose($fp);
+    
+    return true;
+}

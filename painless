@@ -19,6 +19,7 @@ include 'core/Utils/functions.php';
 $timeStart = microtimeFloat();
 
 $path = isset($argv[1]) ? $argv[1] : '';
+$pathTemp = $path . DS . 'temp';
 
 if (empty($path)) {
     echo messageBuilder('Define a directory!', 1, 1);
@@ -29,7 +30,7 @@ if (is_dir($path)) {
     echo messageBuilder('The selected directory already exists!', 1, 1);
 } else {
     mkdir($path);
-    mkdir($path . DS . 'temp');
+    mkdir($pathTemp);
     
     if (!class_exists('ZipArchive')) {
         echo messageBuilder('The Zip PHP extension is not installed. Please install it and try again.', 1, 1);
@@ -48,6 +49,8 @@ if (is_dir($path)) {
     extractZip($zipFile, $path, $path);
     
     cleanUp($zipFile);
+    
+    createEnvFile($path);
     
     echo messageBuilder('Successfully installed in "' . $path . '"!', 1, 1);
 }
