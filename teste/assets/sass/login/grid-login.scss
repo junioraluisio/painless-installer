@@ -1,0 +1,28 @@
+body {
+    background: $primary;
+    font-family: 'Oxygen', sans-serif;
+}
+
+main {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 20vh auto 10vh;
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "container" "footer";
+
+    header {
+        grid-area: header;
+    }
+
+    .container {
+        grid-area: container;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+
+    footer {
+        grid-area: footer;
+    }
+}

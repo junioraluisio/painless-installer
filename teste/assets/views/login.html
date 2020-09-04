@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painless :: Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <!--
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-red.min.css">
+    -->
+    <link rel="stylesheet" type="text/css" href="{{path_web}}/public/css/login.css">
+</head>
+<body id="main-logn">
+<main>
+    <section class="container">
+        <div class="card mdl-shadow--24dp container-form-login border-0">
+            <div class="card-header bg-white border-0">
+                <h4 class="text-center">Login</h4>
+            </div>
+
+            <div class="card-body bg-white mrg-b-15">
+                <form action="#" autocomplete="off">
+                    <label for="username"></label>
+                    <input id="username" style="opacity: 0;position: absolute;" type="text" name="fakeUserNameRemembered">
+
+                    <label for="password"></label>
+                    <input id="password" style="opacity: 0;position: absolute;" type="password" name="fakePasswordRemembered">
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="iptLogin" name="iptUser" autocomplete="new-password">
+                        <label class="mdl-textfield__label" for="iptLogin">Usuário</label>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="password" id="iptPassword" name="iptPass" autocomplete="new-password">
+                        <label class="mdl-textfield__label" for="iptPassword">Senha</label>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-round btn-block" id="btnLogin">ENTRAR</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-center mrg-b-15">
+                <a class="btn btn-link" href="{{path_web}}/password/recover/challenge">Esqueci a minha senha</a>
+            </div>
+
+            <div id="card-message" class="text-muted bg-white">
+                <p id="message" class="alert-text text-center"></p>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<script>
+    const JS_PATH_WEB = '{{path_web}}';
+</script>
+<script src="{{path_web}}/public/js/main.min.js"></script>
+<script src="{{path_web}}/public/js/login.js"></script>
+</html>

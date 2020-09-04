@@ -1,0 +1,19 @@
+{% include 'includes/header.html' %}
+<a href="https://github.com/junioraluisio/painless-painless" class="github">
+    <i class="fab fa-github"></i>
+</a>
+<h1 class="logo">Painless</h1>
+<nav class="box-nav-principal">
+    <ul class="nav-principal">
+        <li><a class="logo-menu" href="home">P</a></li>
+        {% for item in navigation %}
+        <li>
+            <a href="{{ item['url'] }}" class="{{ item['status'] }}">{{ item['normal'] }}</a>
+        </li>
+        {% endfor %}
+        <li>
+
+        </li>
+    </ul>
+</nav>
+{% include 'includes/footer.html' %}

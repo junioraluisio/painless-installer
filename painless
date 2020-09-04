@@ -16,9 +16,9 @@ define('DS', DIRECTORY_SEPARATOR);
 include 'core/Utils/functions.php';
 
 // Iniciamos o "contador"
-$timeStart = microtimeFloat();
+$timeStart = microTimeFloat();
 
-$path = isset($argv[1]) ? $argv[1] : '';
+$path = $argv[1] ?? '';
 $pathTemp = $path . DS . 'temp';
 
 if (empty($path)) {
@@ -29,8 +29,12 @@ if (empty($path)) {
 if (is_dir($path)) {
     echo messageBuilder('The selected directory already exists!', 1, 1);
 } else {
-    mkdir($path);
-    mkdir($pathTemp);
+    if (!mkdir($path) && !is_dir($path)) {
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
+    }
+    if (!mkdir($pathTemp) && !is_dir($pathTemp)) {
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $pathTemp));
+    }
     
     if (!class_exists('ZipArchive')) {
         echo messageBuilder('The Zip PHP extension is not installed. Please install it and try again.', 1, 1);
@@ -56,7 +60,7 @@ if (is_dir($path)) {
 }
 
 // Terminamos o "contador" e exibimos
-$timeEnd = microtimeFloat();
+$timeEnd = microTimeFloat();
 
 // Exibimos uma mensagem
 echo messageBuilderTime($timeStart, $timeEnd);

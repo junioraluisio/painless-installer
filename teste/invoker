@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Junior
+ * Date: 11/03/2017
+ * Time: 11:38
+ */
+
+require 'vendor/autoload.php';
+
+use Pandora\Builder\BuilderSave;
+use Pandora\Config\Files;
+use Pandora\Connection\Conn;
+use Pandora\Database\Database;
+use Pandora\Maker\Maker;
+use Pandora\Maker\MakerActions;
+use Pandora\Utils\ExtractFiles;
+use Pandora\Utils\Memory;
+use Pandora\Utils\Terminal;
+use Pandora\Utils\Timer;
+
+$timer = new Timer();
+$timer->setTimeStart();
+
+$memory = new Memory();
+$terminal = new Terminal();
+
+try {
+// configurações do arquivo .env
+    $dotEnv = new Dotenv\Dotenv(__DIR__);
+    $dotEnv->load();
+
+    $extractFilesDir = new ExtractFiles('config/');
+
+    $configFiles = new Files($extractFilesDir);
+
+    $config = $configFiles->load();
+} catch (Exception $e) {
+    $config = null;
+}
+
+$cmd = isset($argv[1]) ? $argv[1] : '';
+
+$table = isset($argv[2]) && strstr($argv[2], 'table:') ? str_replace(':', '', strstr($argv[2], ':')) : '';
+
+$name = isset($argv[2]) && strstr($argv[2], 'name:') ? str_replace(':', '', strstr($argv[2], ':')) : '';
+
+$conn = !is_null($config) ? new Conn($config['DB_NAME'], $config['DB_HOST'], $config['DB_USER'], $config['DB_PASS']) : null;
+
+$database = !is_null($conn) ? new Database($conn, $table) : null;
+
+$save = new BuilderSave('app/', 'api/', 'assets/');
+
+$makerActions = new MakerActions($save, $database, $name);
+
+$maker = new Maker($makerActions, $cmd);
+
+$maker->execute();
+
+$timer->setTimeEnd();
+
+// Exibe a mensagem
+echo $terminal->write($timer->show(), 1, 0);
+echo $terminal->write($memory->show(), 1, 2);

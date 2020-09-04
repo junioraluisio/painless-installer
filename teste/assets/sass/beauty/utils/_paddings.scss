@@ -1,0 +1,23 @@
+@for $i from 1 through 4 {
+    $value: $i*5;
+
+    .mrg-t-#{$value} {
+        padding-top: $value+px !important;
+    }
+
+    .mrg-r-#{$value} {
+        padding-right: $value+px !important;
+    }
+
+    .mrg-b-#{$value} {
+        padding-bottom: $value+px !important;
+    }
+
+    .mrg-l-#{$value} {
+        padding-left: $value+px !important;
+    }
+
+    .mrg-#{$value} {
+        padding: $value+px !important;
+    }
+}

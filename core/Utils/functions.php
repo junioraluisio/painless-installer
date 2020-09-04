@@ -58,10 +58,11 @@ function messageBuilderTime($timeStart, $timeEnd)
 
 /**
  * Simple function to replicate PHP 5 behaviour
+ * @return float
  */
-function microtimeFloat()
+function microTimeFloat(): float
 {
-    list($usec, $sec) = explode(" ", microtime());
+    [$usec, $sec] = explode(" ", microtime());
     
     return ((float)$usec + (float)$sec);
 }
@@ -75,13 +76,13 @@ function microtimeFloat()
  */
 function copyDirectory($dirFont, $dirDestiny)
 {
-    if (!file_exists($dirDestiny)) {
-        mkdir($dirDestiny);
+    if (!file_exists($dirDestiny) && !mkdir($dirDestiny) && !is_dir($dirDestiny)) {
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $dirDestiny));
     }
     
     if ($dd = opendir($dirFont)) {
         while (false !== ($arq = readdir($dd))) {
-            if ($arq != "." && $arq != "..") {
+            if ($arq !== "." && $arq !== "..") {
                 $pathIn  = "$dirFont/$arq";
                 $pathOut = "$dirDestiny/$arq";
                 
@@ -112,7 +113,7 @@ function copyArchives($dir, $path)
     foreach ($directory as $item) {
         $pathItem = $dir . DS . $item;
         
-        if (!is_dir(($pathItem)) && !in_array($item, $forbidden)) {
+        if (!is_dir(($pathItem)) && !in_array($item, $forbidden, true)) {
             $archives[] = $item;
         }
     }
@@ -122,18 +123,20 @@ function copyArchives($dir, $path)
         $destiny    = $path . DS . $archive;
         $destinyEnv = $path . DS . '.env';
         
-        ($archive == '.env.example') ? copy($source, $destinyEnv) : copy($source, $destiny);
+        ($archive === '.env.example') ? copy($source, $destinyEnv) : copy($source, $destiny);
     }
 }
 
 /**
  * Generate a random temporary filename.
  *
+ * @param $dir
+ *
  * @return string
  */
 function makeFilename($dir)
 {
-    return $dir . DS . 'temp' . DS . 'painless_' . md5(time() . uniqid()) . '.zip';
+    return $dir . DS . 'temp' . DS . 'painless_' . md5(time() . uniqid('', true)) . '.zip';
 }
 
 /**
@@ -190,33 +193,53 @@ function createEnvFile($path)
 {
     $fileEnv = $path . '/.env';
     
-    if(file_exists($fileEnv)){
+    if (file_exists($fileEnv)) {
         unlink($fileEnv);
     }
     
-    $fp = fopen($fileEnv, "w");
+    $fp = fopen($fileEnv, 'wb');
+    
+    $session   = password_hash(date('l jS \of F Y h:i:s A'), PASSWORD_DEFAULT);
+    $jwtId     = password_hash($session, PASSWORD_DEFAULT);
+    $jwtSecret = sha1($jwtId);
     
     $configs = [
+        '# System',
+        'APP_NAME=Painless',
+        'SESSION_NAME=' . $session . PHP_EOL,
         '# Database',
         'DB_CONNECTION=mysql',
         'DB_HOST=127.0.0.1',
         'DB_PORT=3306',
-        'DB_NAME=',
-        'DB_USER=',
-        'DB_PASS=' . PHP_EOL,
-        '# Session',
-        'SESSION_NAME=nkNluAFsFRjXFmkS' . PHP_EOL,
+        'DB_NAME=painless_storage',
+        'DB_USER=root',
+        'DB_PASS=password' . PHP_EOL,
+        '# Configuration',
+        'CONFIG_AUTHENTICATE=true' . PHP_EOL,
         '# Templates folders',
         'VIEW_PATH=public/views',
-        'VIEW_CACHE=tmp/cache/views' . PHP_EOL,
+        'VIEW_CACHE=tmp/cache/views',
+        'VIEW_HOMEPAGE=index' . PHP_EOL,
         '# Token information',
         'JWT_ISSUER=http://domainname.com',
         'JWT_AUDIENCE=http://domainname.com',
-        'JWT_ID=bjZW3jmxyu2co3dx',
-        'JWT_SECRET=oyEgqTZinAIlD3dcuirXQuo86ZeNg5ZpbMQtECxhb9KsDHGvZv' . PHP_EOL,
+        'JWT_ID=' . $jwtId,
+        'JWT_SECRET=' . $jwtSecret . PHP_EOL,
         '# Paths Auth',
         'PATH_PROTECTED=/api|/app',
-        'PATH_PASSTHROUGH=/auth'
+        'PATH_PASSTHROUGH=/auth' . PHP_EOL,
+        '# Configuration Mail',
+        'MAIL_DEBUG=0',
+        'MAIL_MAILER=sendmail',
+        'MAIL_SMTP_HOST=smtp.smtp1.example.com;smtp2.example.com',
+        'MAIL_SMTP_AUTH=true',
+        'MAIL_SMTP_USER=painless@domainname.com',
+        'MAIL_SMTP_PASSWORD=painless',
+        'MAIL_SMTP_SECURE=tls',
+        'MAIL_SMTP_PORT=587',
+        'MAIL_FROM=painless@domainname.com',
+        'MAIL_FROM_NAME=Painless',
+        'MAIL_TEMPLATE_PATH=/public/templates/mail'
     ];
     
     foreach ($configs as $config) {

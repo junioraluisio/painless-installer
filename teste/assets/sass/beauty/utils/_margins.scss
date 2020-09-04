@@ -1,0 +1,23 @@
+@for $i from 1 through 4 {
+    $value: $i*5;
+
+    .mrg-t-#{$value} {
+        margin-top: $value+px !important;
+    }
+
+    .mrg-r-#{$value} {
+        margin-right: $value+px !important;
+    }
+
+    .mrg-b-#{$value} {
+        margin-bottom: $value+px !important;
+    }
+
+    .mrg-l-#{$value} {
+        margin-left: $value+px !important;
+    }
+
+    .mrg-#{$value} {
+        margin: $value+px !important;
+    }
+}

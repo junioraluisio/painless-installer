@@ -1,0 +1,18 @@
+@mixin typo-preferred-font($usePreferred: true) {
+  @if $usePreferred {
+    font-family: $preferred_font;
+  }
+}
+
+@mixin typo-button($colorContrast: false, $usePreferred: true) {
+    @include typo-preferred-font($usePreferred);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: 0;
+
+    @if $colorContrast {
+        opacity: 0.87;
+    }
+}

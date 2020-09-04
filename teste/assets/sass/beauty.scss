@@ -1,0 +1,18 @@
+/* Variáveis */
+@import "beauty/vars/colors";
+
+/* Reset */
+@import "beauty/includes/reset";
+
+/* Material Design */
+@import "frameworks/materialdesign/template";
+
+/* Bootstrap */
+@import "frameworks/bootstrap/bootstrap";
+
+/* Utils */
+@import "beauty/utils/margins";
+@import "beauty/utils/paddings";
+
+/* Animations */
+@import "frameworks/animate/animate";
