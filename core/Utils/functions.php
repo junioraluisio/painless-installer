@@ -60,7 +60,7 @@ function messageBuilderTime($timeStart, $timeEnd)
  * Simple function to replicate PHP 5 behaviour
  * @return float
  */
-function microTimeFloat(): float
+function microtimeFloat(): float
 {
     [$usec, $sec] = explode(" ", microtime());
     

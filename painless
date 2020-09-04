@@ -16,7 +16,7 @@ define('DS', DIRECTORY_SEPARATOR);
 include 'core/Utils/functions.php';
 
 // Iniciamos o "contador"
-$timeStart = microTimeFloat();
+$timeStart = microtimeFloat();
 
 $path = $argv[1] ?? '';
 $pathTemp = $path . DS . 'temp';
@@ -60,7 +60,7 @@ if (is_dir($path)) {
 }
 
 // Terminamos o "contador" e exibimos
-$timeEnd = microTimeFloat();
+$timeEnd = microtimeFloat();
 
 // Exibimos uma mensagem
 echo messageBuilderTime($timeStart, $timeEnd);
